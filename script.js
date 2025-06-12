@@ -9,7 +9,7 @@ sendBtn.addEventListener("click", async () => {
   appendMessage("You", message);
   inputBox.value = "";
 
-  const response = await fetch("http://127.0.0.1:8000/chat", {
+  const response = await fetch("https://chatbot-backend-9zbr.onrender.com", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
