@@ -1,38 +1,39 @@
-const chatbox = document.getElementById("chatbox");
-const userInputField = document.getElementById("user-input");
-const sendBtn = document.getElementById("send-btn");
+const chatbox = document.getElementById("chat-container");
+const inputBox = document.getElementById("input-box");
+const sendButton = document.getElementById("send-btn");
 
-sendBtn.addEventListener("click", () => {
-  const userInput = userInputField.value.trim();
-  if (userInput === "") return;
+sendButton.addEventListener("click", async () => {
+  const userMessage = inputBox.value.trim();
+  if (!userMessage) return;
 
-  chatbox.innerHTML += `<div class="user-msg">${userInput}</div>`;
-  chatbox.scrollTop = chatbox.scrollHeight;
-  userInputField.value = "";
+  addMessage("You", userMessage);
+  inputBox.value = "";
 
-  fetch("https://chatbot-backend-9zbr.onrender.com/chat", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ message: userInput })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.response) {
-      chatbox.innerHTML += `<div class="bot-msg">${data.response}</div>`;
-    } else {
-      chatbox.innerHTML += `<div class="bot-msg error">Bot replied: undefined 🤖</div>`;
-    }
-    chatbox.scrollTop = chatbox.scrollHeight;
-  })
-  .catch(error => {
-    chatbox.innerHTML += `<div class="bot-msg error">Something went wrong 🛠️</div>`;
-  });
-});
+  try {
+    const response = await fetch("https://chatbot-backend-9zbr.onrender.com/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: userMessage })
+    });
 
-userInputField.addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    sendBtn.click();
+    const data = await response.json();
+    const botReply = data.response || data.reply || "Bot did not respond.";
+    addMessage("Bot", botReply);
+  } catch (error) {
+    addMessage("Bot", "❌ Could not reach server.");
   }
 });
+
+inputBox.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendButton.click();
+});
+
+function addMessage(sender, text) {
+  const msg = document.createElement("div");
+  msg.classList.add("message");
+  msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
+  chatbox.appendChild(msg);
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
