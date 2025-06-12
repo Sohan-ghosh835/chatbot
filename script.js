@@ -11,12 +11,13 @@ sendButton.addEventListener("click", async () => {
 
   try {
     const response = await fetch("https://chatbot-backend-9zbr.onrender.com/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message: userMessage })
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ message: userMessage })
+});
+
 
     const data = await response.json();
     const botReply = data.response || data.reply || "Bot did not respond.";
