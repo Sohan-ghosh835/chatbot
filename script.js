@@ -38,3 +38,16 @@ function addMessage(sender, text) {
   chatbox.appendChild(msg);
   chatbox.scrollTop = chatbox.scrollHeight;
 }
+
+const chatContainer = document.getElementById("chat-container");
+
+function adjustPadding() {
+  const isScrollVisible = chatContainer.scrollHeight > chatContainer.clientHeight;
+  chatContainer.style.paddingRight = isScrollVisible ? "5px" : "15px";
+}
+
+window.addEventListener("load", adjustPadding);
+window.addEventListener("resize", adjustPadding);
+
+const observer = new MutationObserver(adjustPadding);
+observer.observe(chatContainer, { childList: true, subtree: true });

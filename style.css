@@ -9,6 +9,12 @@
   --whiteish: #f5f9ff;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+
 body {
   font-family: 'Pixelify Sans', cursive;
   background: var(--light-gray);
@@ -16,6 +22,7 @@ body {
   text-align: center;
   padding: 20px;
   animation: fadeInBody 1s ease-out;
+  image-rendering: pixelated;
 }
 
 @keyframes fadeInBody {
@@ -35,6 +42,53 @@ body {
   background: var(--whiteish);
   box-shadow: 0 0 10px rgba(123, 148, 178, 0.4);
   animation: slideInContainer 0.8s ease-out;
+  transition: padding 0.2s ease;
+}
+
+#chat-container.scrolling {
+  padding: 15px 5px 15px 15px;
+}
+
+#chat-container::-webkit-scrollbar {
+  width: 20px; 
+  background: transparent;
+}
+
+#chat-container::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+  background: url('scroll1.png') no-repeat center;
+  background-size: contain; 
+  border-radius: 0;
+  min-height: 30px; 
+  border: none;
+  margin: 0;
+}
+
+#chat-container::-webkit-scrollbar-thumb:hover {
+  background: url('scroll2.png') no-repeat center;
+  background-size: contain;
+}
+
+
+
+#chat-container::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+
+@supports not (-webkit-scrollbar) {
+  #chat-container {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
 }
 
 @keyframes slideInContainer {
@@ -122,7 +176,7 @@ body {
   font-weight: bold;
   color: var(--blue-muted);
   margin-top: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   letter-spacing: 3px;
   text-align: left;
   width: 85%;
@@ -188,3 +242,6 @@ body {
   z-index: 0;
 }
 
+* {
+  image-rendering: pixelated;
+}
