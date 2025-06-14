@@ -51,3 +51,10 @@ window.addEventListener("resize", adjustPadding);
 
 const observer = new MutationObserver(adjustPadding);
 observer.observe(chatContainer, { childList: true, subtree: true });
+
+const hamburger = document.getElementById("hamburger");
+const sidePanel = document.getElementById("side-panel");
+
+hamburger.addEventListener("click", () => {
+  sidePanel.classList.toggle("active");
+});
