@@ -34,10 +34,23 @@ inputBox.addEventListener("keypress", (e) => {
 function addMessage(sender, text) {
   const msg = document.createElement("div");
   msg.classList.add("message");
+
+  if (sender === "Scoop") {
+    text = text.replace(/```([\s\S]*?)```/g, (match, code) => {
+      const encodedCode = code.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      return `
+        <div class="code-block">
+          <pre><code>${encodedCode}</code></pre>
+          <button class="copy-btn" onclick="copyToClipboard(\`${code.replace(/`/g, "\\`")}\`)">📋Copy</button>
+        </div>`;
+    });
+  }
+
   msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
   chatbox.appendChild(msg);
   chatbox.scrollTop = chatbox.scrollHeight;
 }
+
 
 const chatContainer = document.getElementById("chat-container");
 
@@ -58,3 +71,9 @@ const sidePanel = document.getElementById("side-panel");
 hamburger.addEventListener("click", () => {
   sidePanel.classList.toggle("active");
 });
+
+function copyToClipboard(code) {
+  navigator.clipboard.writeText(code).then(() => {
+    alert("Code copied to clipboard!");
+  });
+}

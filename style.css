@@ -318,3 +318,31 @@ body {
 .side-footer a:hover {
   color: var(--dark);
 }
+
+.code-block {
+  background-color: #f0f0f5;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 8px;
+  position: relative;
+  font-family: "Courier New", monospace;
+  overflow-x: auto;
+  white-space: pre;
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+}
+
+.code-block .copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background-color: #e0e0ff;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.code-block .copy-btn:hover {
+  background-color: #d0d0ff;
+}
