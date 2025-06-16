@@ -346,3 +346,99 @@ body {
 .code-block .copy-btn:hover {
   background-color: #d0d0ff;
 }
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-150%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+#corner-video {
+  display: none; 
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 400px; 
+  height: auto;
+  pointer-events: none;
+  z-index: 1000;
+  filter: brightness(1.1) contrast(1.2) saturate(1.1);
+  transition: filter 0.3s ease;
+
+}
+
+#corner-video.slide-in {
+  display: block;
+  animation: slideInFromLeft 1.5s ease-out forwards;
+}
+
+#corner-video2 {
+  display: none; 
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 400px; 
+  height: auto;
+  pointer-events: none;
+  z-index: 1000;
+  filter: brightness(1.1) contrast(1.2) saturate(1.1);
+  transition: filter 0.3s ease;
+}
+
+#corner-video2.slide-out {
+  display: block;
+  animation: slideOutFromRight 1.5s ease-out backwards;
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+#corner-video2.slide-out-left {
+  animation: slideOutToLeft 1s ease-in forwards;
+}
+
+
+#reveal-btn {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 60px;
+  height: auto;
+  z-index: 1001;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+}
+
+#heart-btn {
+  display: none;
+  position: fixed;
+  left: 26.99%;
+  bottom: 15.2%;
+  transform: translate(-50%, -50%) rotate(17.7deg);
+  font-size: 60px;
+  color: red;
+  z-index: 1002;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: auto;
+}
+
+@media (max-width: 767px) {
+  #heart-btn {
+    display: none !important;
+  }
+}
+
+
+
+
+

@@ -73,7 +73,7 @@ function renderBotResponse(text) {
     if (beforeCode) addMessage("Scoop", beforeCode);
 
     const codeContent = match[1].trim();
-    if (codeContent) addCodeBubble(codeContent); // Only add if code is not empty
+    if (codeContent) addCodeBubble(codeContent); 
     lastIndex = codeRegex.lastIndex;
   }
 
@@ -130,3 +130,72 @@ const sidePanel = document.getElementById("side-panel");
 hamburger.addEventListener("click", () => {
   sidePanel.classList.toggle("active");
 });
+
+const cornerVideo = document.getElementById('corner-video');
+const cornerVideo2 = document.getElementById('corner-video2');
+const revealBtn = document.getElementById('reveal-btn');
+const heartBtn = document.getElementById('heart-btn');
+
+revealBtn.addEventListener('click', () => {
+  revealBtn.style.opacity = '0';
+  revealBtn.style.pointerEvents = 'none';
+  cornerVideo.style.display = 'block';
+  cornerVideo.classList.remove('slide-in');
+  void cornerVideo.offsetWidth;
+  cornerVideo.classList.add('slide-in');
+  cornerVideo.currentTime = 0;
+  cornerVideo.play();
+});
+
+
+
+cornerVideo.addEventListener('ended', () => {
+  cornerVideo.pause();
+  cornerVideo.currentTime = cornerVideo.duration - 0.01;
+});
+
+const FRAME_THRESHOLD = 110 / 30;
+let heartShown = false;
+
+cornerVideo.addEventListener('timeupdate', () => {
+  if (!heartShown && cornerVideo.currentTime >= FRAME_THRESHOLD) {
+    heartBtn.style.display = 'block';
+    heartShown = true;
+  }
+});
+
+function handleHeartAction() {
+  cornerVideo.pause();
+  cornerVideo.style.display = 'none';
+  cornerVideo2.style.display = 'block';
+  cornerVideo2.currentTime = 0;
+  cornerVideo2.play();
+  heartBtn.style.display = 'none';
+
+  const handleSlideOut = () => {
+    if (cornerVideo2.duration - cornerVideo2.currentTime <= 2 && !cornerVideo2.classList.contains('slide-out-left')) {
+      cornerVideo2.classList.add('slide-out-left');
+      cornerVideo2.removeEventListener('timeupdate', handleSlideOut);
+    }
+  };
+
+  cornerVideo2.addEventListener('timeupdate', handleSlideOut);
+}
+
+heartBtn.addEventListener('click', handleHeartAction);
+heartBtn.addEventListener('touchstart', handleHeartAction);
+
+cornerVideo2.addEventListener('ended', () => {
+  cornerVideo2.style.display = 'none';
+  cornerVideo2.classList.remove('slide-out-left');
+  heartShown = false;
+  revealBtn.style.display = 'block';
+  revealBtn.style.opacity = '1';
+  revealBtn.style.pointerEvents = 'auto';
+});
+
+
+
+
+
+
